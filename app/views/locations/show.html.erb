@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>From this location:</b>
+  <%= @location.address %>
+</p>
+
+@client = GooglePlaces::Client.new(AIzaSyCvkueZAT1OI9bBpN3ItOWQrfNhVKjsuYs)
+
+<%= @client.spots(-33.8670522, 151.1957362) %>
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+
+
+<h3>Here are the 10 closest coffee shops in your area:</h3>
+<ul>
+<% for location in @location.nearbys(50) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
+
+
+<%= link_to 'Edit', edit_location_path(@location) %> |
+<%= link_to 'Back', locations_path %>
