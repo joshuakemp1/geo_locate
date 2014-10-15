@@ -5,20 +5,79 @@
   <%= @location.address %>
 </p>
 
-@client = GooglePlaces::Client.new(AIzaSyCvkueZAT1OI9bBpN3ItOWQrfNhVKjsuYs)
-
-<%= @client.spots(-33.8670522, 151.1957362) %>
-
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
-
 
 <h3>Here are the 10 closest coffee shops in your area:</h3>
-<ul>
-<% for location in @location.nearbys(50) %>
-  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
-<% end %>
-</ul>
 
 
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 400px;
+        width: 400px;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script>
+var map;
+var infowindow;
+
+
+
+function initialize() {
+
+var startingPoint = new google.maps.LatLng(<%= @location.latitude %>, <%= @location.longitude %>);
+
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: startingPoint,
+    zoom: 15
+  });
+
+  var request = {
+    location: startingPoint,
+    types: ['cafe'],
+    rankBy: google.maps.places.RankBy.DISTANCE
+  };
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < 10; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
+
+
+<%= link_to 'Change Address', edit_location_path(@location) %>
