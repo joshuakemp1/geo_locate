@@ -1,7 +1,7 @@
 GeoLocate::Application.routes.draw do
   resources :locations
 
-    # root :to => 'locations#show'
+    root :to => 'locations#new'
 
 
   # The priority is based upon order of creation:
