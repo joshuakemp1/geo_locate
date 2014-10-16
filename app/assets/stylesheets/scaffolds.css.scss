@@ -1,5 +1,5 @@
 body {
-  background-color: #fff;
+  background-color: #C1C1C2;
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
@@ -24,7 +24,7 @@ a {
     color: #666;
   }
   &:hover {
-    color: #fff;
+    color: yellow;
     background-color: #000;
   }
 }
@@ -36,7 +36,7 @@ div {
 }
 
 #notice {
-  color: green;
+  color: yellow;
 }
 
 .field_with_errors {

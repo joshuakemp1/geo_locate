@@ -12,6 +12,27 @@
  *= require_tree .
  */
 
+
+
+div#center{
+  padding: 250px;
+  margin: 0 auto;
+}
+
+div#container{
+  height: 500px;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#map-canvas {
+  height: 500px;
+  width: 1000px;
+  margin: 0 auto;
+  padding: 0px;
+  border-radius: 20px;
+}
+
 .button {
   color: yellow;
   width: 90px;
@@ -29,3 +50,4 @@
   background-color: black;
   border-radius: 50px;
 }*/
+
