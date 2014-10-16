@@ -5,6 +5,8 @@ gem 'geocoder'
 gem 'google_places', '~> 0.24.0'
 gem 'pry'
 
+ruby '2.0.0'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
